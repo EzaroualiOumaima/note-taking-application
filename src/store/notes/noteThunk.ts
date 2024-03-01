@@ -39,9 +39,11 @@ export const updateNote = createAsyncThunk(
 
 export const deleteNote = createAsyncThunk (
     'notes/deletenotes' , 
-    async(credentials : {id : string} , thunkApi)=> {
+    async(id : string , thunkApi)=> {
         try {
-            const res = await axios.delete(`http://localhost:3000/api/tasks/${credentials.id}`)    
+            await axios.delete(`http://localhost:3000/api/tasks/${id}`)
+            alert("item Deleted")  
+            window.location.reload()  
         } catch (error) {
             return thunkApi.rejectWithValue(error)
         }

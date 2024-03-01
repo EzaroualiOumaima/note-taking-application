@@ -1,9 +1,10 @@
 "use client"
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { updateNote  } from "@/store/notes/noteThunk"
 import { AppDispatch, RootState } from "@/store/store"
 import { useDispatch, useSelector } from "react-redux"
+import { useRouter } from 'next/navigation';
+
 
 
 interface Note {
@@ -13,18 +14,22 @@ interface Note {
 }
 
 export default function EditNoteForm({params}: {params:{id: string}}) {
+  const router = useRouter();
   const dispatch = useDispatch<AppDispatch>()
   const  {note }  = useSelector((state : RootState) => state.note)
  console.log(note)
   const { id } = params; // Assert router.query to have the type { id: string }
 
-  const [title, setTitle] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
   const handleUpdate = (e: React.FormEvent) => {
     e.preventDefault(); 
-    dispatch(updateNote({id  ,title , description}));
-   
+    dispatch(updateNote({id  ,title , description})).then(()=> {
+
+      router.push('/'); 
+    })
+    
   };
 
   useEffect(() => {
@@ -72,7 +77,7 @@ export default function EditNoteForm({params}: {params:{id: string}}) {
 
   return (
     <>
-      <form
+      <form onSubmit={handleUpdate}
         className="flex flex-col gap-3"
         // onSubmit={(e) => {
         //   e.preventDefault();
@@ -95,7 +100,7 @@ export default function EditNoteForm({params}: {params:{id: string}}) {
           onChange={(e) => setDescription(e.target.value)}
           required
         />
-          <Link href="/">
+         
         <button
           type="submit"
           className="bg-green-600 font-bold text-white py-3 px-6 w-fit"
@@ -103,8 +108,8 @@ export default function EditNoteForm({params}: {params:{id: string}}) {
         >
           Edit Note
         </button>
-        </Link>
       </form>
+      
     </>
   );
 }

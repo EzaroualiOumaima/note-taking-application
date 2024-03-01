@@ -38,7 +38,9 @@ const NotesLists: React.FC = () => {
       await dispatch(fetchNotes());
     };
     getAUser();
-  }, []);
+  }, [dispatch]);
+
+  
   const handleDelete = (id: any) => {
     dispatch(deleteNote(id));
   };
