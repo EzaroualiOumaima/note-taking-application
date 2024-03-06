@@ -4,7 +4,7 @@ import axios from "axios";
     'notes/getAllnotes' , 
     async (  ) => {
         try {
-           const response = await fetch('http://localhost:3000/api/tasks');
+           const response = await fetch('/api/tasks');
             const data = await response.json() ;
             console.log(data)
             return data; 
@@ -18,7 +18,7 @@ import axios from "axios";
     'notes/addnotes' ,
     async(credentials : {title :string , description : string} , thunkApi) => {
         try {
-            const res = await axios.post("http://localhost:3000/api/tasks" , credentials )
+            const res = await axios.post("/api/tasks" , credentials )
               
         } catch (error) {
             return thunkApi.rejectWithValue(error)
@@ -30,7 +30,7 @@ export const updateNote = createAsyncThunk(
     'notes/putnotes' , 
     async(credentials : { id : string , title : string , description : string} , thunkApi)=> {
      try {
-        const res = await axios.put(`http://localhost:3000/api/tasks/${credentials.id}`, {title: credentials.title , description: credentials.description})
+        const res = await axios.put(`/api/tasks/${credentials.id}`, {title: credentials.title , description: credentials.description})
      } catch (error) {
         return thunkApi.rejectWithValue(error)
      }
@@ -41,8 +41,8 @@ export const deleteNote = createAsyncThunk (
     'notes/deletenotes' , 
     async(id : string , thunkApi)=> {
         try {
-            await axios.delete(`http://localhost:3000/api/tasks/${id}`)
-            alert("item Deleted")  
+            await axios.delete(`/api/tasks/${id}`)
+            // alert("item Deleted")  
             window.location.reload()  
         } catch (error) {
             return thunkApi.rejectWithValue(error)

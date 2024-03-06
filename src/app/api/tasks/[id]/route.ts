@@ -31,7 +31,7 @@ export async function DELETE(request :NextRequest) {
        if(!deletedTask) {
         throw new Error ("Task not found")
        }
-        return NextResponse.json({ message: "User deleted" }, { status: 200 });
+        return NextResponse.json({ message: "Task deleted" }, { status: 200 });
     }catch(err){
         return NextResponse.json({message : err} , {status : 500})
     }    
